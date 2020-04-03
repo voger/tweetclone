@@ -5,12 +5,3 @@
 # It is also run when you use `mix ecto.setup` or `mix ecto.reset`
 #
 
-users = [
-  %{email: "jane.doe@example.com", password: "password"},
-  %{email: "john.smith@example.org", password: "password"}
-]
-
-for user <- users do
-  {:ok, user} = TweetClone.Accounts.create_user(user)
-  TweetClone.Accounts.confirm_user(user)
-end
