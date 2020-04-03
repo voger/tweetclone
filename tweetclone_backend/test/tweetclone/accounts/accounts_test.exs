@@ -16,12 +16,12 @@ defmodule TweetClone.AccountsTest do
   describe "read user data" do
     test "list_users/1 returns all users" do
       user = fixture(:user)
-      assert Accounts.list_users() == [user]
+      assert Accounts.list_users() == [%{user| password: nil}]
     end
 
     test "get_user! returns the user with given id" do
       user = fixture(:user)
-      assert Accounts.get_user!(user.id) == user
+      assert Accounts.get_user!(user.id) == %{user| password: nil}
     end
 
     test "change_user/1 returns a user changeset" do
@@ -50,7 +50,7 @@ defmodule TweetClone.AccountsTest do
     test "update_user/2 with invalid data returns error changeset" do
       user = fixture(:user)
       assert {:error, %Ecto.Changeset{}} = Accounts.update_user(user, @invalid_attrs)
-      assert user == Accounts.get_user!(user.id)
+      assert %{user| password: nil} == Accounts.get_user!(user.id)
     end
 
     test "update password changes the stored hash" do
