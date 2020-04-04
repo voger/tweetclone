@@ -34,6 +34,7 @@
     
     # Ecto Migration
     create: :*,
+    modify: :*,
     
     # Absinthe
     arg: :*,
