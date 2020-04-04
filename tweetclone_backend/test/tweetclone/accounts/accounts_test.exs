@@ -4,7 +4,7 @@ defmodule TweetClone.AccountsTest do
   alias TweetClone.Accounts
   alias TweetClone.Accounts.User
 
-  @create_attrs %{email: "fred@example.com", password: "reallyHard2gue$$"}
+  @create_attrs %{nickname: "fred", email: "fred@example.com", password: "reallyHard2gue$$"}
   @update_attrs %{email: "frederick@example.com"}
   @invalid_attrs %{email: "", password: ""}
 
