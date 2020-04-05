@@ -24,16 +24,22 @@ defmodule TweetCloneWeb.PasswordResetControllerTest do
 
   describe "update password reset" do
     test "reset password succeeds for correct key", %{conn: conn} do
-      valid_attrs = %{key: gen_key("gladys@example.com"), password: "^hEsdg*F899"}
+      valid_attrs = %{
+        key: gen_key("gladys@example.com"),
+        password: "^hEsdg*F899",
+        password_confirmation: "^hEsdg*F899"
+      }
 
       reset_conn =
         put(conn, Routes.password_reset_path(conn, :update), password_reset: valid_attrs)
 
       assert json_response(reset_conn, 200)["info"]["detail"] =~ "password has been reset"
+
       conn =
         post(conn, Routes.session_path(conn, :create),
           session: %{email: "gladys@example.com", password: "^hEsdg*F899"}
         )
+
       assert json_response(conn, 200)["access_token"]
     end
 

@@ -4,7 +4,12 @@ defmodule TweetClone.AccountsTest do
   alias TweetClone.Accounts
   alias TweetClone.Accounts.User
 
-  @create_attrs %{nickname: "fred", email: "fred@example.com", password: "reallyHard2gue$$"}
+  @create_attrs %{
+    nickname: "fred",
+    email: "fred@example.com",
+    password: "reallyHard2gue$$",
+    password_confirmation: "reallyHard2gue$$"
+  }
   @update_attrs %{email: "frederick@example.com"}
   @invalid_attrs %{email: "", password: ""}
 
@@ -16,12 +21,12 @@ defmodule TweetClone.AccountsTest do
   describe "read user data" do
     test "list_users/1 returns all users" do
       user = fixture(:user)
-      assert Accounts.list_users() == [%{user| password: nil}]
+      assert Accounts.list_users() == [%{user | password: nil}]
     end
 
     test "get_user! returns the user with given id" do
       user = fixture(:user)
-      assert Accounts.get_user!(user.id) == %{user| password: nil}
+      assert Accounts.get_user!(user.id) == %{user | password: nil}
     end
 
     test "change_user/1 returns a user changeset" do
@@ -50,19 +55,19 @@ defmodule TweetClone.AccountsTest do
     test "update_user/2 with invalid data returns error changeset" do
       user = fixture(:user)
       assert {:error, %Ecto.Changeset{}} = Accounts.update_user(user, @invalid_attrs)
-      assert %{user| password: nil} == Accounts.get_user!(user.id)
+      assert %{user | password: nil} == Accounts.get_user!(user.id)
     end
 
     test "update password changes the stored hash" do
       %{password_hash: stored_hash} = user = fixture(:user)
-      attrs = %{password: "CN8W6kpb"}
+      attrs = %{password: "CN8W6kpb", password_confirmation: "CN8W6kpb"}
       {:ok, %{password_hash: hash}} = Accounts.update_password(user, attrs)
       assert hash != stored_hash
     end
 
     test "update_password with weak password fails" do
       user = fixture(:user)
-      attrs = %{password: "pass"}
+      attrs = %{password: "pass", password_confirmation: "pass"}
       assert {:error, %Ecto.Changeset{}} = Accounts.update_password(user, attrs)
     end
   end

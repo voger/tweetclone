@@ -43,6 +43,7 @@ defmodule TweetClone.Accounts.User do
     |> unique_constraint(:nickname)
     |> unique_email
     |> validate_password(:password)
+    |> validate_confirmation(:password, required: true)
     |> put_pass_hash
   end
 
@@ -57,7 +58,7 @@ defmodule TweetClone.Accounts.User do
   def update_password_changeset(%__MODULE__{} = user, attrs) do
     user
     |> cast(attrs, [:password])
-    |> validate_required([:password])
+    |> validate_confirmation(:password, required: true)
     |> validate_password(:password)
     |> put_pass_hash()
     |> change(%{reset_sent_at: nil})

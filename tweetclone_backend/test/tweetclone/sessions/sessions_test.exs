@@ -4,7 +4,13 @@ defmodule TweetClone.SessionsTest do
   alias TweetClone.{Accounts, Sessions, Sessions.Session}
 
   setup do
-    attrs = %{nickname: "fred", email: "fred@example.com", password: "reallyHard2gue$$"}
+    attrs = %{
+      nickname: "fred",
+      email: "fred@example.com",
+      password: "reallyHard2gue$$",
+      password_confirmation: "reallyHard2gue$$"
+    }
+
     {:ok, user} = Accounts.create_user(attrs)
     {:ok, user: user}
   end

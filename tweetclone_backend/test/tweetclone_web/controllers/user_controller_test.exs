@@ -5,7 +5,12 @@ defmodule TweetCloneWeb.UserControllerTest do
 
   alias TweetClone.Accounts
 
-  @create_attrs %{nickname: "bill", email: "bill@example.com", password: "hard2guess"}
+  @create_attrs %{
+    nickname: "bill",
+    email: "bill@example.com",
+    password: "hard2guess",
+    password_confirmation: "hard2guess"
+  }
   @update_attrs %{email: "william@example.com"}
   @invalid_attrs %{email: nil}
 
@@ -21,7 +26,7 @@ defmodule TweetCloneWeb.UserControllerTest do
       assert json_response(conn, 200)
     end
 
-    test "renders /users error for nil user", %{conn: conn}  do
+    test "renders /users error for nil user", %{conn: conn} do
       conn = get(conn, Routes.user_path(conn, :index))
       assert json_response(conn, 401)
     end
@@ -36,9 +41,9 @@ defmodule TweetCloneWeb.UserControllerTest do
     end
 
     test "returns 404 when user not found", %{conn: conn} do
-      assert_error_sent 404, fn ->
+      assert_error_sent(404, fn ->
         get(conn, Routes.user_path(conn, :show, -1))
-      end
+      end)
     end
   end
 
