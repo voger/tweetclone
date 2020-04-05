@@ -5,7 +5,7 @@ defmodule TweetCloneWeb.UserControllerTest do
 
   alias TweetClone.Accounts
 
-  @create_attrs %{email: "bill@example.com", password: "hard2guess"}
+  @create_attrs %{nickname: "bill", email: "bill@example.com", password: "hard2guess"}
   @update_attrs %{email: "william@example.com"}
   @invalid_attrs %{email: nil}
 

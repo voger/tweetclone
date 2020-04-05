@@ -8,7 +8,8 @@ defmodule TweetCloneWeb.AuthTestHelpers do
   alias TweetCloneWeb.Auth.Token
 
   def add_user(email) do
-    user = %{email: email, password: "reallyHard2gue$$"}
+    [nickname, _] = String.split(email, "@", parts: 2)
+    user = %{nickname: nickname, email: email, password: "reallyHard2gue$$"}
     {:ok, user} = Accounts.create_user(user)
     user
   end

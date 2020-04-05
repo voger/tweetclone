@@ -7,6 +7,7 @@ defmodule TweetClone.Accounts.User do
 
   @type t :: %__MODULE__{
     id: integer,
+    nickname: String.t(),
     email: String.t(),
     password_hash: String.t(),
     confirmed_at: DateTime.t() | nil,
@@ -17,6 +18,7 @@ defmodule TweetClone.Accounts.User do
   }
 
   schema "users" do
+    field :nickname, :string
     field :email, :string
     field :password, :string, virtual: true
     field :password_hash, :string
@@ -36,8 +38,9 @@ defmodule TweetClone.Accounts.User do
 
   def create_changeset(%__MODULE__{} = user, attrs) do
     user
-    |> cast(attrs, [:email, :password])
-    |> validate_required([:email, :password])
+    |> cast(attrs, [:nickname, :email, :password])
+    |> validate_required([:nickname, :email, :password])
+    |> unique_constraint(:nickname)
     |> unique_email
     |> validate_password(:password)
     |> put_pass_hash
