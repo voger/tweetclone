@@ -21,7 +21,7 @@ defmodule TweetCloneWeb.UserControllerTest do
   describe "index" do
     test "lists all entries on index", %{conn: conn} do
       user = add_user("reg@example.com")
-      conn = conn |> add_token_conn(user)
+      conn = conn |> add_session(user)
       conn = get(conn, Routes.user_path(conn, :index))
       assert json_response(conn, 200)
     end
@@ -65,6 +65,7 @@ defmodule TweetCloneWeb.UserControllerTest do
 
     test "updates chosen user when data is valid", %{conn: conn, user: user} do
       conn = put(conn, Routes.user_path(conn, :update, user), user: @update_attrs)
+
       assert json_response(conn, 200)["data"]["id"] == user.id
       updated_user = Accounts.get_user!(user.id)
       assert updated_user.email == "william@example.com"
@@ -98,7 +99,9 @@ defmodule TweetCloneWeb.UserControllerTest do
 
   defp add_user_session(%{conn: conn}) do
     user = add_user("reg@example.com")
-    conn = conn |> add_token_conn(user)
+
+    conn = conn |> add_session(user)
+
     {:ok, %{conn: conn, user: user}}
   end
 end

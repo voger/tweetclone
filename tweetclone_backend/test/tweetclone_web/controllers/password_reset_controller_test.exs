@@ -40,7 +40,7 @@ defmodule TweetCloneWeb.PasswordResetControllerTest do
           session: %{email: "gladys@example.com", password: "^hEsdg*F899"}
         )
 
-      assert json_response(conn, 200)["access_token"]
+      assert json_response(conn, 200)["info"] == "ok"
     end
 
     test "reset password fails for incorrect key", %{conn: conn} do

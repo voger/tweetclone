@@ -38,6 +38,14 @@ defmodule TweetCloneWeb.AuthTestHelpers do
     |> Repo.update!()
   end
 
+  def add_session(conn, user) do
+    {:ok, %{id: session_id}} = Sessions.create_session(%{user_id: user.id})
+
+    conn
+    |> Plug.Test.init_test_session(phauxth_session_id: session_id)
+    |> configure_session(renew: true)
+  end
+
   def add_token_conn(conn, user) do
     {:ok, %{id: session_id}} = Sessions.create_session(%{user_id: user.id})
     user_token = Token.sign(%{"session_id" => session_id})

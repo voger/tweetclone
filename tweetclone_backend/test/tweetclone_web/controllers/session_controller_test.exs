@@ -16,9 +16,10 @@ defmodule TweetCloneWeb.SessionControllerTest do
   end
 
   describe "create session" do
+    require Cl
     test "login succeeds", %{conn: conn} do
       conn = post(conn, Routes.session_path(conn, :create), session: @create_attrs)
-      assert json_response(conn, 200)["access_token"]
+      assert json_response(conn, 200)["info"] == "ok"
     end
 
     test "login fails for user that is not yet confirmed", %{conn: conn} do
@@ -27,7 +28,7 @@ defmodule TweetCloneWeb.SessionControllerTest do
     end
 
     test "login fails for user that is already logged in", %{conn: conn, user: user} do
-      conn = conn |> add_token_conn(user)
+      conn = conn |> add_session(user)
       conn = post(conn, Routes.session_path(conn, :create), session: @create_attrs)
       assert json_response(conn, 401)["errors"]["detail"] =~ "already logged in"
     end

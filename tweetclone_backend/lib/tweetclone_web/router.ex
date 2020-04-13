@@ -3,13 +3,16 @@ defmodule TweetCloneWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug Phauxth.AuthenticateToken
+    plug :fetch_session
+    plug Phauxth.Authenticate
+    plug :put_secure_browser_headers
   end
 
   scope "/api", TweetCloneWeb do
     pipe_through :api
 
     post "/sessions", SessionController, :create
+    delete "/sessions", SessionController, :logout
     resources "/users", UserController, except: [:new, :edit]
     get "/confirms", ConfirmController, :index
     post "/password_resets", PasswordResetController, :create
@@ -19,7 +22,7 @@ defmodule TweetCloneWeb.Router do
   scope "/api" do
     pipe_through :api
 
-    if Bamboo.LocalAdapter =
+    if Bamboo.LocalAdapter ==
          Application.compile_env(:tweetclone, [TweetCloneWeb.Mailer, :adapter]) do
       # forward "/sentemails", Bamboo.SentEmailApiPlug
       forward "/sentemails", TweetCloneWeb.Plug.SentToken
