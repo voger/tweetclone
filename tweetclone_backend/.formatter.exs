@@ -12,6 +12,7 @@
     socket: :*,
     get: :*,
     post: :*,
+    put: :*,
     resources: :*,
     pipe_through: :*,
     delete: :*,

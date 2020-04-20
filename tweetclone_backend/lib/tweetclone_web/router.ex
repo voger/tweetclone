@@ -19,7 +19,7 @@ defmodule TweetCloneWeb.Router do
     resources "/users", UserController, except: [:create, :new, :edit]
     delete "/sessions", SessionController, :logout
     post "/password_resets", PasswordResetController, :create
-    put("/password_resets/update", PasswordResetController, :update)
+    put "/password_resets/update", PasswordResetController, :update
   end
 
   scope "/api", TweetCloneWeb do
