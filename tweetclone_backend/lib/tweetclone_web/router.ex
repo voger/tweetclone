@@ -4,28 +4,36 @@ defmodule TweetCloneWeb.Router do
   pipeline :api do
     plug :accepts, ["json"]
     plug :fetch_session
-    plug Phauxth.Authenticate
     plug :put_secure_browser_headers
+    plug Phauxth.Authenticate
+  end
+
+  pipeline :protect_csrf do
+    plug :protect_from_forgery
+  end
+
+  scope "/api", TweetCloneWeb do
+    pipe_through :api
+    pipe_through :protect_csrf
+
+    resources "/users", UserController, except: [:create, :new, :edit]
+    delete "/sessions", SessionController, :logout
+    post "/password_resets", PasswordResetController, :create
+    put("/password_resets/update", PasswordResetController, :update)
   end
 
   scope "/api", TweetCloneWeb do
     pipe_through :api
 
     post "/sessions", SessionController, :create
-    delete "/sessions", SessionController, :logout
-    resources "/users", UserController, except: [:new, :edit]
+    post "/users", UserController, :create
+    post "/token", CSRFController, :show
     get "/confirms", ConfirmController, :index
-    post "/password_resets", PasswordResetController, :create
-    put("/password_resets/update", PasswordResetController, :update)
-  end
-
-  scope "/api" do
-    pipe_through :api
 
     if Bamboo.LocalAdapter ==
          Application.compile_env(:tweetclone, [TweetCloneWeb.Mailer, :adapter]) do
       # forward "/sentemails", Bamboo.SentEmailApiPlug
-      forward "/sentemails", TweetCloneWeb.Plug.SentToken
+      forward "/sentemails", Plug.SentToken
     end
   end
 end

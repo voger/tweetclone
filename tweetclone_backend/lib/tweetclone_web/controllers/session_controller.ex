@@ -9,7 +9,6 @@ defmodule TweetCloneWeb.SessionController do
   alias TweetClone.Sessions
   alias TweetClone.Sessions.Session
   alias TweetCloneWeb.Auth.Login
-  alias TweetCloneWeb.Auth.Token
 
   # the following plug is defined in the controllers/authorize.ex file
   plug :guest_check when action in [:create]
@@ -17,6 +16,7 @@ defmodule TweetCloneWeb.SessionController do
 
   plug :assign_session_id when action in [:logout]
 
+  require Cl
   def create(conn, %{"session" => params}) do
     case Login.verify(params) do
       {:ok, user} ->
@@ -26,8 +26,12 @@ defmodule TweetCloneWeb.SessionController do
         # TweetClone.Sessions and TweetClone.Sessions.Session modules
         {:ok, %{id: session_id}} = Sessions.create_session(%{user_id: user.id})
 
+         delete_csrf_token()
+
         conn
         |> put_session(:phauxth_session_id, session_id)
+        # |> put_resp_cookie("csrftoken", get_csrf_token(), http_only: false)
+        # |> put_session("_csrf_token", Plug.CSRFProtection.get_csrf_token())
         |> configure_session(renew: true)
         |> render("info.json", %{info: :ok})
 
