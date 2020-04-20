@@ -12,6 +12,18 @@ defmodule TweetCloneWeb.Router do
     plug :protect_from_forgery
   end
 
+  scope "/graphql" do
+    pipe_through :api
+
+    post "/", Absinthe.Plug, schema: TweetCloneWeb.Schema
+
+    if Mix.env() == :dev do
+      forward "/graphiql", Absinthe.Plug.GraphiQL,
+        schema: TweetCloneWeb.Schema
+      # socket: PlateSlateWeb.UserSocket
+    end
+  end
+
   scope "/api", TweetCloneWeb do
     pipe_through :api
     pipe_through :protect_csrf
