@@ -9,7 +9,7 @@ use Mix.Config
 
 config :tweetclone,
   namespace: TweetClone,
-  ecto_repos: [TweetClone.Repo]
+  ecto_repos: [TweetClone.Repo, Terminator.Repo]
 
 # Configures the endpoint
 config :tweetclone, TweetCloneWeb.Endpoint,

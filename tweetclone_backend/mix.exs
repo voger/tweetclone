@@ -37,7 +37,7 @@ defmodule TweetClone.MixProject do
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_ecto, "~> 4.0"},
       {:ecto_sql, "~> 3.0"},
-      {:postgrex, ">= 0.0.0"},
+      {:postgrex, ">= 0.0.0", override: true},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0", override: true},
 
@@ -50,7 +50,7 @@ defmodule TweetClone.MixProject do
       # Absinthe
       {:absinthe, "~> 1.4"},
       {:absinthe_plug, "~> 1.4"},
-
+      {:absinthe_auth, "~> 0.2.1"},
       # Dev helpers
       {:clouseau, "~> 0.5.0"},
       {:credo, "~> 1.3", only: [:dev, :test], runtime: false}

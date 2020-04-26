@@ -6,16 +6,16 @@ defmodule TweetClone.Accounts.User do
   alias TweetClone.Sessions.Session
 
   @type t :: %__MODULE__{
-    id: integer,
-    nickname: String.t(),
-    email: String.t(),
-    password_hash: String.t(),
-    confirmed_at: DateTime.t() | nil,
-    reset_sent_at: DateTime.t() | nil,
-    sessions: [Session.t()] | %Ecto.Association.NotLoaded{},
-    inserted_at: DateTime.t(),
-    updated_at: DateTime.t()
-  }
+          id: integer,
+          nickname: String.t(),
+          email: String.t(),
+          password_hash: String.t(),
+          confirmed_at: DateTime.t() | nil,
+          reset_sent_at: DateTime.t() | nil,
+          sessions: [Session.t()] | %Ecto.Association.NotLoaded{},
+          inserted_at: DateTime.t(),
+          updated_at: DateTime.t()
+        }
 
   schema "users" do
     field :nickname, :string
@@ -88,8 +88,7 @@ defmodule TweetClone.Accounts.User do
   end
 
   # If you are using Bcrypt or Pbkdf2, change Argon2 to Bcrypt or Pbkdf2
-  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes:
-      %{password: password}} = changeset) do
+  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
     change(changeset, Argon2.add_hash(password))
   end
 

@@ -6,6 +6,7 @@ defmodule TweetCloneWeb.Router do
     plug :fetch_session
     plug :put_secure_browser_headers
     plug Phauxth.Authenticate
+    plug TweetCloneWeb.Plug.Context
   end
 
   pipeline :protect_csrf do
