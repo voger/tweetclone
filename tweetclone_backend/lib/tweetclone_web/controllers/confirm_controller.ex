@@ -17,7 +17,9 @@ defmodule TweetCloneWeb.ConfirmController do
         |> put_view(TweetCloneWeb.ConfirmView)
         |> render("info.json", %{info: "Your account has been confirmed"})
 
-      {:error, _message} ->
+      {:error, message} ->
+        require Cl
+        Cl.inspect(message, label: "-cb Error message")
         error(conn, :unauthorized, 401)
     end
   end
