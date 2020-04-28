@@ -2,8 +2,6 @@ defmodule TweetCloneWeb.Policies.Reveal do
   use AbsintheAuth.Policy
 
   def is_me(%{context: %{current_user: %{id: id}}, source: %{id: id}} = resolution, _, _) do
-    require Cl
-    Cl.inspect(resolution, label: "-cb The resolution")
     allow!(resolution)
   end
 
