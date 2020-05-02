@@ -4,6 +4,7 @@ defmodule TweetClone.Accounts.User do
   import Ecto.Changeset
 
   alias TweetClone.Sessions.Session
+alias TweetClone.UserRelationships.UserRelationship
 
   @type t :: %__MODULE__{
           id: integer,
@@ -24,7 +25,16 @@ defmodule TweetClone.Accounts.User do
     field :password_hash, :string
     field :confirmed_at, :utc_datetime
     field :reset_sent_at, :utc_datetime
+
     has_many :sessions, Session, on_delete: :delete_all
+
+    # the following two foreign_keys are set the other way around in the 
+    # UserRelationship struct
+    has_many :follower_relationships, UserRelationship, foreign_key: :subject_id
+    has_many :subject_relationships, UserRelationship, foreign_key: :follower_id
+
+    has_many :followers, through: [:follower_relationships, :follower]
+    has_many :subjects, through: [:subject_relationships, :subject]
 
     timestamps()
   end

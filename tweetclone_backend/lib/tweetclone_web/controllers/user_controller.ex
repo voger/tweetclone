@@ -31,7 +31,7 @@ defmodule TweetCloneWeb.UserController do
   end
 
   def show(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"id" => id}) do
-    user = if id == to_string(user.id), do: user, else: Accounts.get_user!(id)
+    user = if id == to_string(user.id), do: user, else: Accounts.get_user(id)
     render(conn, "show.json", user: user)
   end
 

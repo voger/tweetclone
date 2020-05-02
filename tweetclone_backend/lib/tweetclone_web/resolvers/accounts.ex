@@ -2,7 +2,7 @@ defmodule TweetCloneWeb.Resolvers.Accounts do
   alias TweetClone.Accounts
 
   def get_user(_, %{id: id}, _) do
-    with %Accounts.User{} = user <- Accounts.get_user!(id) do
+    with %Accounts.User{} = user <- Accounts.get_user(id) do
       {:ok, user}
     # else
       # _ -> {:ok, nil}
