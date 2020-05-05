@@ -26,16 +26,14 @@ defmodule TweetClone.UserRelationships.UserRelationship do
     )
   end
 
-  # Validates that the subject and the follower are not the same user
   defp validate_different_users(changeset) do
     validate_change(changeset, :subject, fn :subject, _subject ->
-      %{id: subject_id} = fetch_field!(changeset, :subject)
-      %{id: follower_id} = fetch_field!(changeset, :follower)
-
-      if subject_id != follower_id do
-        []
-      else
+      with %{id: subject_id} <- fetch_field!(changeset, :subject),
+           %{id: ^subject_id} <- fetch_field!(changeset, :follower) do
         [subject: "subject and follower can not be the same"]
+      else
+        _ ->
+          []
       end
     end)
   end
