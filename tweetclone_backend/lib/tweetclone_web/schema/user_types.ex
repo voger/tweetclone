@@ -6,7 +6,7 @@ defmodule TweetCloneWeb.Schema.UserTypes do
   alias TweetCloneWeb.Policies.Reveal
 
   object :user do
-    field :nickname, :string
+    field :nickname, non_null(:string)
     field :followers, list_of(:user) do
       resolve &UserRelationships.get_followers/3
     end
@@ -16,7 +16,7 @@ defmodule TweetCloneWeb.Schema.UserTypes do
   end
 
   input_object :follow_user_input do
-    field :id, :id
+    field :id, non_null(:integer)
   end
 
 
