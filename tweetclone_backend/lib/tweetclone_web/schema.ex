@@ -21,8 +21,13 @@ defmodule TweetCloneWeb.Schema do
 
   mutation do
     field :follow_user, :follow_user_result do
-      resolve &UserRelationships.create_user_relationship/3
       arg :input, non_null(:follow_user_input)
+      resolve &UserRelationships.create_user_relationship/3
+    end
+
+    field :unfollow_user, :follow_user_result do
+      arg :input, non_null(:follow_user_input)
+      resolve &UserRelationships.delete_user_relationship/3
     end
   end
 

@@ -22,49 +22,21 @@ defmodule TweetClone.UserRelationships do
   end
 
   @doc """
-  Updates a user_relationship.
-
-  ## Examples
-
-      iex> update_user_relationship(user_relationship, %{field: new_value})
-      {:ok, %UserRelationship{}}
-
-      iex> update_user_relationship(user_relationship, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_user_relationship(%UserRelationship{} = user_relationship, attrs) do
-    user_relationship
-    |> UserRelationship.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
   Deletes a user_relationship.
-
-  ## Examples
-
-      iex> delete_user_relationship(user_relationship)
-      {:ok, %UserRelationship{}}
-
-      iex> delete_user_relationship(user_relationship)
-      {:error, %Ecto.Changeset{}}
-
   """
-  def delete_user_relationship(%UserRelationship{} = user_relationship) do
-    Repo.delete(user_relationship)
-  end
+  def delete_user_relationship(subject_id, follower_id) do
+    UserRelationship
+    |> Repo.load(%{subject_id: subject_id, follower_id: follower_id})
+    |> Repo.delete(
+      stale_error_field: :subject,
+      stale_error_message: "relationship does not exist"
+    )
+    |> case do
+      {:ok, user_relationship} ->
+        {:ok, Repo.preload(user_relationship, :subject)}
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking user_relationship changes.
-
-  ## Examples
-
-      iex> change_user_relationship(user_relationship)
-      %Ecto.Changeset{source: %UserRelationship{}}
-
-  """
-  def change_user_relationship(%UserRelationship{} = user_relationship) do
-    UserRelationship.changeset(user_relationship, %{})
+      {:error, changeset} ->
+        {:error, changeset}
+    end
   end
 end

@@ -6,8 +6,8 @@ defmodule TweetClone.UserRelationships.UserRelationship do
 
   @primary_key false
   schema "user_relationships" do
-    belongs_to :follower, User, foreign_key: :follower_id, primary_key: true
-    belongs_to :subject, User, foreign_key: :subject_id, primary_key: true
+    belongs_to :subject, User, primary_key: true
+    belongs_to :follower, User, primary_key: true
 
     timestamps()
   end
