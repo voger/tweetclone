@@ -4,7 +4,8 @@ defmodule TweetClone.Accounts.User do
   import Ecto.Changeset
 
   alias TweetClone.Sessions.Session
-alias TweetClone.UserRelationships.UserRelationship
+  alias TweetClone.UserRelationships.UserRelationship
+  alias TweetClone.Statuses.Status
 
   @type t :: %__MODULE__{
           id: integer,
@@ -35,6 +36,9 @@ alias TweetClone.UserRelationships.UserRelationship
 
     has_many :followers, through: [:follower_relationships, :follower]
     has_many :subjects, through: [:subject_relationships, :subject]
+
+    has_many :statuses, Status, foreign_key: :sender_id
+    has_many :direct_messages, Status, foreign_key: :recipient_id
 
     timestamps()
   end

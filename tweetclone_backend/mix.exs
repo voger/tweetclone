@@ -50,6 +50,7 @@ defmodule TweetClone.MixProject do
       # Absinthe
       {:absinthe, "~> 1.4"},
       {:absinthe_plug, "~> 1.4"},
+      {:dataloader, "~> 1.0"},
       {:absinthe_auth, "~> 0.2.1"},
       # Dev helpers
       {:clouseau, "~> 0.5.0"},
