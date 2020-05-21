@@ -4,25 +4,28 @@ defmodule TweetClone.Statuses do
   """
 
   import Ecto.Query, warn: false
-  alias TweetClone.Repo
 
+  alias TweetClone.Repo
   alias TweetClone.Statuses.Status
+  alias TweetClone.Accounts.User
 
   @doc """
   Gets a single status.
-
-  Raises `Ecto.NoResultsError` if the Status does not exist.
-
-  ## Examples
-
-      iex> get_status!(123)
-      %Status{}
-
-      iex> get_status!(456)
-      ** (Ecto.NoResultsError)
-
   """
-  def get_status!(id), do: Repo.get!(Status, id)
+  def get_status(status_id, user) do
+    Status
+    |> where([s], s.id == ^status_id)
+    |> where(^public_or_related(user))
+    |> Repo.one()
+  end
+
+  defp public_or_related(%User{id: user_id}) do
+    dynamic([s], is_nil(s.recipient_id) or s.recipient_id == ^user_id or s.sender_id == ^user_id)
+  end
+
+  defp public_or_related(nil) do
+    dynamic([s], is_nil(s.recipient_id))
+  end
 
   @doc """
   Creates a status.

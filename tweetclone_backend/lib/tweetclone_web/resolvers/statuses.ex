@@ -1,16 +1,15 @@
 defmodule TweetCloneWeb.Resolvers.Statuses do
   alias TweetClone.Statuses
 
-  def create_status(_, %{input: %{text: text}}, %{context: %{current_user: current_user}}) do
-    attrs = %{
-      text: text,
-      sender: current_user
-    }
+  def create_status(_, %{input: input}, %{context: %{current_user: current_user}}) do
+    attrs = Map.put(input, :sender, current_user)
 
-    Statuses.create_status(attrs)
+    with {:ok, status} <- Statuses.create_status(attrs) do
+      {:ok, %{status: status}}
+    end
   end
 
-  def get_status(_, %{input: %{id: id}}, _) do
-    {:ok, Statuses.get_status!(id)}
+  def get_status(_, %{id: id}, %{context: %{current_user: current_user}}) do
+    {:ok, Statuses.get_status(id, current_user)}
   end
 end

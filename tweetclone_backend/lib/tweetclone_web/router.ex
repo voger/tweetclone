@@ -20,8 +20,8 @@ defmodule TweetCloneWeb.Router do
 
     if Mix.env() == :dev do
       forward "/graphiql", Absinthe.Plug.GraphiQL,
-        schema: TweetCloneWeb.Schema
-      # socket: PlateSlateWeb.UserSocket
+        schema: TweetCloneWeb.Schema,
+        interface: :advanced
     end
   end
 

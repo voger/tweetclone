@@ -3,18 +3,17 @@ defmodule TweetCloneWeb.Schema.StatusTypes do
 
   import Absinthe.Resolution.Helpers
 
-  alias TweetClone.Statuses.Status
   import_types Absinthe.Type.Custom
 
   object :status do
     field :id, :integer
-    field :text, non_null(:string)
+    field :text, :string
 
     field :sender, :user do
       resolve dataloader(TweetClone.Repo)
     end
 
-    field :receiver, list_of(:user) do
+    field :recipient, :user do
       resolve dataloader(TweetClone.Repo)
     end
 
@@ -27,8 +26,13 @@ defmodule TweetCloneWeb.Schema.StatusTypes do
     field :text, non_null(:string)
   end
 
+  input_object :create_private_status_input do
+    field :text, non_null(:string)
+    field :recipient, non_null(:string)
+  end
+
   input_object :get_status_input do
-    field :id, non_null(:id)
+    field :id, non_null(:integer)
   end
 
   object :create_status_result do
