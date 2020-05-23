@@ -27,18 +27,6 @@ defmodule TweetClone.Statuses do
     dynamic([s], is_nil(s.recipient_id))
   end
 
-  @doc """
-  Creates a status.
-
-  ## Examples
-
-      iex> create_status(%{field: value})
-      {:ok, %Status{}}
-
-      iex> create_status(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def create_status(attrs \\ %{}) do
     %Status{}
     |> Status.changeset(attrs)

@@ -3,7 +3,7 @@ defmodule TweetCloneWeb.Schema.Mutation.StatusTest do
 
   import TweetCloneWeb.AuthTestHelpers
 
-  describe "logged in user" do
+  describe "authenticated in user" do
     setup do
       bob = add_user_confirmed("bob@example.com")
       alice = add_user_confirmed("alice@example.net")

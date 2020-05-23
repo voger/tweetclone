@@ -9,7 +9,7 @@ defmodule TweetCloneWeb.Resolvers.Statuses do
     end
   end
 
-  def get_status(_, %{id: id}, %{context: %{current_user: current_user}}) do
+  def get_status(_, %{input: %{id: id}}, %{context: %{current_user: current_user}}) do
     {:ok, Statuses.get_status(id, current_user)}
   end
 end

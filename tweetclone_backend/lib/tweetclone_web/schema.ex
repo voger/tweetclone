@@ -24,7 +24,7 @@ defmodule TweetCloneWeb.Schema do
 
     field :status, :status do
       resolve &Statuses.get_status/3
-      arg :id, non_null(:integer)
+      arg :input, non_null(:get_status_input)
     end
   end
 
