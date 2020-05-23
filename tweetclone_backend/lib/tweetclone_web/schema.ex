@@ -43,6 +43,11 @@ defmodule TweetCloneWeb.Schema do
       arg :input, non_null(:create_status_input)
       resolve &Statuses.create_status/3
     end
+
+    field :create_private_status, :create_status_result do
+      arg :input, non_null(:create_private_status_input)
+      resolve &Statuses.create_status/3
+    end
   end
 
   @desc "An error encountered trying to persist input"

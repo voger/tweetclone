@@ -36,6 +36,10 @@ defmodule TweetClone.Accounts do
     Repo.get_by(User, email: email)
   end
 
+  def get_by(%{"nickname" => nickname}) do
+    Repo.get_by(User, nickname: nickname)
+  end
+
   @doc """
   Creates a user.
   """

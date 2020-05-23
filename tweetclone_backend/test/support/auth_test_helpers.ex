@@ -4,8 +4,6 @@ defmodule TweetCloneWeb.AuthTestHelpers do
   import Ecto.Changeset
 
   alias TweetClone.{Accounts, Repo, Sessions}
-  alias TweetCloneWeb.Auth.Token
-  alias TweetCloneWeb.Auth.Token
 
   def add_user(email) do
     [nickname, _] = String.split(email, "@", parts: 2)
@@ -44,15 +42,6 @@ defmodule TweetCloneWeb.AuthTestHelpers do
     conn
     |> Plug.Test.init_test_session(phauxth_session_id: session_id)
     |> configure_session(renew: true)
-  end
-
-  def add_token_conn(conn, user) do
-    {:ok, %{id: session_id}} = Sessions.create_session(%{user_id: user.id})
-    user_token = Token.sign(%{"session_id" => session_id})
-
-    conn
-    |> put_req_header("accept", "application/json")
-    |> put_req_header("authorization", user_token)
   end
 
   defp now do
