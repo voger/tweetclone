@@ -36,7 +36,7 @@ defmodule TweetClone.Statuses.Status do
         changeset,
         :recipient,
         "the user with nickname %{recipient_nickname} does not exist",
-        recipient_nickname: recipient_nickname
+        [recipient_nickname: recipient_nickname]
       )
     end
   end

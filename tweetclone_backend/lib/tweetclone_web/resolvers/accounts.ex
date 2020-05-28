@@ -4,7 +4,7 @@ defmodule TweetCloneWeb.Resolvers.Accounts do
   def get_user(_, %{id: id}, _) do
     with %Accounts.User{} = user <- Accounts.get_user(id) do
       {:ok, user}
-    # else
+      # else
       # _ -> {:ok, nil}
     end
   end

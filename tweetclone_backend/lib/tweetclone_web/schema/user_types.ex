@@ -4,22 +4,65 @@ defmodule TweetCloneWeb.Schema.UserTypes do
 
   alias TweetCloneWeb.Resolvers.UserRelationships
   alias TweetCloneWeb.Policies.Reveal
+  alias TweetClone.Accounts.User
 
   import Absinthe.Resolution.Helpers
 
+  interface :user_interface do
+    field :id, non_null(:integer)
+    field :nickname, non_null(:string)
+    field :subjects, list_of(:user)
+    field :followers, list_of(:user)
+    field :statuses, list_of(:status)
+
+    resolve_type fn
+      %User{id: id}, %{context: %{current_user: %{id: id}}} ->
+        :me
+
+      _, _ ->
+        :user
+    end
+  end
+
+  object :me do
+    interfaces([:user_interface])
+    field :id, non_null(:integer)
+    field :nickname, non_null(:string)
+
+    field :subjects, list_of(:user) do
+      resolve dataloader(TweetClone.Repo)
+    end
+
+    field :statuses, list_of(:status) do
+      resolve dataloader(TweetClone.Repo)
+    end
+
+    field :followers, list_of(:user) do
+      resolve dataloader(TweetClone.Repo)
+    end
+
+    field :email, :string
+
+    field :direct_messages, list_of(:status) do
+      resolve dataloader(TweetClone.Repo)
+    end
+  end
+
   object :user do
+    interfaces([:user_interface])
+    field :id, non_null(:integer)
     field :nickname, non_null(:string)
 
     field :followers, list_of(:user) do
-      resolve &UserRelationships.get_followers/3
+      resolve dataloader(TweetClone.Repo)
     end
 
     field :subjects, list_of(:user) do
       resolve dataloader(TweetClone.Repo)
     end
 
-    field :email, :string do
-      policy(Reveal, :is_me)
+    field :statuses, list_of(:status) do
+      resolve dataloader(TweetClone.Repo)
     end
   end
 

@@ -13,11 +13,11 @@ defmodule TweetCloneWeb.Schema do
   import_types __MODULE__.StatusTypes
 
   query do
-    field :me, :user do
+    field :me, :user_interface do
       resolve &Accounts.me/3
     end
 
-    field :user, :user do
+    field :user, :user_interface do
       resolve &Accounts.get_user/3
       arg :id, non_null(:string)
     end
@@ -25,6 +25,11 @@ defmodule TweetCloneWeb.Schema do
     field :status, :status do
       resolve &Statuses.get_status/3
       arg :input, non_null(:get_status_input)
+    end
+
+    field :statuses, list_of(:status) do
+      arg :input, :statuses_privacy, default_value: %{privacy: :public}
+      resolve &Statuses.list_statuses/3
     end
   end
 

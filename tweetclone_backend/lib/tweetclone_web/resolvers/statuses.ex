@@ -12,4 +12,8 @@ defmodule TweetCloneWeb.Resolvers.Statuses do
   def get_status(_, %{input: %{id: id}}, %{context: %{current_user: current_user}}) do
     {:ok, Statuses.get_status(id, current_user)}
   end
+
+  def list_statuses(_, %{input: filters}, %{context: %{current_user: current_user}}) do
+    {:ok, Statuses.list_statuses(filters, current_user)}
+  end
 end

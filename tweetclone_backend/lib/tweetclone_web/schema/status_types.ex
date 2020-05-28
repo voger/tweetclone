@@ -35,8 +35,17 @@ defmodule TweetCloneWeb.Schema.StatusTypes do
     field :id, non_null(:integer)
   end
 
+  input_object :statuses_privacy do
+    field :privacy, :privacy
+  end
+
   object :create_status_result do
     field :status, :status
     field :errors, list_of(:input_error)
+  end
+
+  enum :privacy do
+    value :public
+    value :private
   end
 end
