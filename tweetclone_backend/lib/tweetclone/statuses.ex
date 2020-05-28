@@ -33,6 +33,24 @@ defmodule TweetClone.Statuses do
     |> Repo.insert()
   end
 
+  def list_statuses(filters, user) do
+    Enum.reduce(filters, Status, fn
+      {_, nil}, query ->
+        query
+
+      {:privacy, :public}, query ->
+        from s in query, where: is_nil(s.recipient_id)
+
+      {:privacy, :private}, query ->
+        if user do
+          from s in query, where: s.recipient_id == ^user.id
+        else
+          from s in query, where: false
+        end
+    end)
+    |> Repo.all()
+  end
+
   @doc """
   Updates a status.
 
