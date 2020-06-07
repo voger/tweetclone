@@ -1,14 +1,18 @@
 defmodule TweetClone.Statuses.Status do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query
 
   alias TweetClone.Accounts
   alias TweetClone.Accounts.User
+  alias TweetClone.Repo
 
   schema "statuses" do
     field :text, :string
     belongs_to :sender, User
     belongs_to :recipient, User
+
+    many_to_many :mentioned_users, User, join_through: TweetClone.Statuses.Mention
 
     timestamps()
   end
@@ -21,6 +25,7 @@ defmodule TweetClone.Statuses.Status do
     |> maybe_assoc_recipient(attrs)
     |> assoc_constraint(:sender)
     |> validate_required([:text, :sender])
+    |> mention_users()
   end
 
   # If there is a recipient in the attrs map, then that is
@@ -36,7 +41,7 @@ defmodule TweetClone.Statuses.Status do
         changeset,
         :recipient,
         "the user with nickname %{recipient_nickname} does not exist",
-        [recipient_nickname: recipient_nickname]
+        recipient_nickname: recipient_nickname
       )
     end
   end
@@ -59,5 +64,21 @@ defmodule TweetClone.Statuses.Status do
 
   defp maybe_assoc_recipient(changeset, _) do
     changeset
+  end
+
+  defp mention_users(changeset) do
+    text = get_change(changeset, :text, "")
+
+    mentioned_nicknames =
+      Regex.scan(~r/@[\w.@_-]+/u, text)
+      |> Enum.map(fn nickname ->
+        nickname
+        |> hd()
+        |> String.trim_leading("@")
+      end)
+
+
+    mentioned_users = Repo.all(from u in User, where: u.nickname in ^mentioned_nicknames)
+    put_assoc(changeset, :mentioned_users, mentioned_users)
   end
 end

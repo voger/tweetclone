@@ -40,6 +40,8 @@ defmodule TweetClone.Accounts.User do
     has_many :statuses, Status, foreign_key: :sender_id
     has_many :direct_messages, Status, foreign_key: :recipient_id
 
+    many_to_many :mentioned_statuses, Status, join_through: TweetClone.Statuses.Mentions
+
     timestamps()
   end
 

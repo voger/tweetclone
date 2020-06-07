@@ -28,7 +28,7 @@ defmodule TweetCloneWeb.Schema do
     end
 
     field :statuses, list_of(:status) do
-      arg :input, :statuses_privacy, default_value: %{privacy: :public}
+      arg :input, :filters
       resolve &Statuses.list_statuses/3
     end
   end
