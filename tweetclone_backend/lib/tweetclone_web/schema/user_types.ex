@@ -2,8 +2,6 @@ defmodule TweetCloneWeb.Schema.UserTypes do
   use Absinthe.Schema.Notation
   use AbsintheAuth
 
-  alias TweetCloneWeb.Resolvers.UserRelationships
-  alias TweetCloneWeb.Policies.Reveal
   alias TweetClone.Accounts.User
 
   import Absinthe.Resolution.Helpers

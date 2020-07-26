@@ -31,7 +31,17 @@ defmodule TweetClone.Statuses do
     %Status{}
     |> Status.changeset(attrs)
     |> Repo.insert()
+    |> case do
+      {:ok, status} ->
+        # mentions should be created after the status is persisted
+        # no need to be a transaction.
+        {:ok, status}
+
+      {:error, changeset} ->
+        {:error, changeset}
+    end
   end
+
 
   def list_statuses(filters, user) do
     Enum.reduce(filters, Status, fn
