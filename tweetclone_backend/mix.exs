@@ -54,7 +54,10 @@ defmodule TweetClone.MixProject do
       {:absinthe_auth, "~> 0.2.1"},
       # Dev helpers
       {:clouseau, "~> 0.5.0"},
-      {:credo, "~> 1.3", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.3", only: [:dev, :test], runtime: false},
+
+      # Others
+      {:httpoison, "~> 1.7"}
     ]
   end
 
