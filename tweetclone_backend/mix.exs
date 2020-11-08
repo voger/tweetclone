@@ -55,9 +55,7 @@ defmodule TweetClone.MixProject do
       # Dev helpers
       {:clouseau, "~> 0.5.0"},
       {:credo, "~> 1.3", only: [:dev, :test], runtime: false},
-
-      # Others
-      {:httpoison, "~> 1.7"}
+      {:mojito, "~> 0.7.3"}
     ]
   end
 
