@@ -54,3 +54,6 @@ config :tweetclone, TweetClone.Repo,
   database: "tweetclone_dev",
   hostname: "localhost",
   pool_size: 10
+
+
+import_config "prod.secret.exs"
