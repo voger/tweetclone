@@ -6,15 +6,17 @@ defmodule TweetClone.Statuses.Status do
   alias TweetClone.Accounts
   alias TweetClone.Accounts.User
   alias TweetClone.Repo
+  alias TweetClone.Taggable
 
   require Cl
 
   schema "statuses" do
-    field(:text, :string)
-    belongs_to(:sender, User)
-    belongs_to(:recipient, User)
+    field :text, :string
+    belongs_to :sender, User
+    belongs_to :recipient, User
 
-    many_to_many(:mentioned_users, User, join_through: TweetClone.Statuses.Mention)
+    many_to_many :mentioned_users, User, join_through: TweetClone.Statuses.Mention
+    many_to_many :tags, Taggable.Tag, join_through: Taggable.Tagging
 
     timestamps()
   end
@@ -100,6 +102,7 @@ defmodule TweetClone.Statuses.Status do
       |> Enum.map(fn {:ok, result} -> result end)
 
     replaced_text = replace_urls_with_short(text, shotrened_urls)
+
     put_change(changeset, :text, replaced_text)
     |> Cl.inspect(label: "-cb Changed text")
   end
