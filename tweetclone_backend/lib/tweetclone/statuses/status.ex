@@ -8,24 +8,23 @@ defmodule TweetClone.Statuses.Status do
   alias TweetClone.Repo
   alias TweetClone.Taggable
 
-  require Cl
-
   schema "statuses" do
     field :text, :string
     belongs_to :sender, User
     belongs_to :recipient, User
 
     many_to_many :mentioned_users, User, join_through: TweetClone.Statuses.Mention
-    many_to_many :tags, Taggable.Tag, join_through: Taggable.Tagging
+    many_to_many :tags, Taggable.Tag, join_through: Taggable.Tagging, on_replace: :delete
 
     timestamps()
   end
 
   @doc false
-  def changeset(status, attrs) do
+  def changeset(status, attrs, tags) do
     status
     |> cast(attrs, [:text])
     |> put_assoc(:sender, attrs.sender)
+    |> put_assoc(:tags, tags)
     |> maybe_assoc_recipient(attrs)
     |> assoc_constraint(:sender)
     |> validate_required([:text, :sender])
@@ -104,7 +103,6 @@ defmodule TweetClone.Statuses.Status do
     replaced_text = replace_urls_with_short(text, shotrened_urls)
 
     put_change(changeset, :text, replaced_text)
-    |> Cl.inspect(label: "-cb Changed text")
   end
 
   defp shorten_urls(changeset), do: changeset

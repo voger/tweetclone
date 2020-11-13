@@ -4,7 +4,7 @@ defmodule TweetCloneWeb.Resolvers.Statuses do
   def create_status(_, %{input: input}, %{context: %{current_user: current_user}}) do
     attrs = Map.put(input, :sender, current_user)
 
-    with {:ok, status} <- Statuses.create_status(attrs) do
+    with {:ok, status} <- Statuses.create_status_with_tags(attrs) do
       {:ok, %{status: status}}
     end
   end

@@ -16,6 +16,13 @@ defmodule TweetClone.Taggable.Tag do
     tag
     |> cast(attrs, [:name])
     |> validate_required([:name])
-    |> unique_constraint(:name, name: :tags_name_index)
+  end
+
+  @doc """
+  Helper function to extract hashtags from text
+  """
+  def parse(text) do
+    Regex.scan(~r/#[\w-]+/u, text)
+    |> List.flatten()
   end
 end
