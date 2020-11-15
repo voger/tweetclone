@@ -17,9 +17,11 @@ defmodule TweetClone.Taggable do
       [%Tag{}, ...]
 
   """
-  def list_tags do
+  def list_tags() do
     Repo.all(Tag)
   end
+
+
 
   @doc """
   Gets a single tag.

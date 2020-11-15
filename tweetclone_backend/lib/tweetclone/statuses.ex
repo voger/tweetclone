@@ -10,6 +10,7 @@ defmodule TweetClone.Statuses do
   alias TweetClone.Accounts.User
   alias TweetClone.Taggable.Tag
 
+  require Cl
   @doc """
   Gets a single status.
   """
@@ -41,7 +42,7 @@ defmodule TweetClone.Statuses do
       {:ok, %{status: status}} ->
         {:ok, status}
 
-      {:error, %{status: changeset}} ->
+      {:error, status, changeset, _} ->
         {:error, changeset}
     end
   end
@@ -73,6 +74,11 @@ defmodule TweetClone.Statuses do
     Enum.reduce(filters, Status, fn
       {_, nil}, query ->
         query
+
+      {:tag, tag}, query ->
+        from s in query, 
+        join: t in assoc(s, :tags),
+        where: t.name == ^tag
 
       {:privacy, :public}, query ->
         from s in query, where: is_nil(s.recipient_id)
