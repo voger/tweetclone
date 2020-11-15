@@ -26,6 +26,7 @@ defmodule TweetCloneWeb.Schema.StatusTypes do
     end
   end
 
+
   object :create_status_result do
     field(:status, :status)
     field(:errors, list_of(:input_error))
@@ -48,6 +49,7 @@ defmodule TweetCloneWeb.Schema.StatusTypes do
     field :privacy, :privacy do
       arg(:privacy_val, :string, default_value: :public)
     end
+      field(:tag, :string)
   end
 
   enum :privacy do

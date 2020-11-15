@@ -4,6 +4,7 @@ defmodule TweetCloneWeb.Schema do
   alias TweetCloneWeb.Resolvers.Accounts
   alias TweetCloneWeb.Resolvers.UserRelationships
   alias TweetCloneWeb.Resolvers.Statuses
+  alias TweetCloneWeb.Resolvers.Tags
 
   alias TweetClone.Repo
 
@@ -11,6 +12,7 @@ defmodule TweetCloneWeb.Schema do
 
   import_types __MODULE__.UserTypes
   import_types __MODULE__.StatusTypes
+  import_types __MODULE__.TagTypes
 
   query do
     field :me, :user_interface do
@@ -30,6 +32,10 @@ defmodule TweetCloneWeb.Schema do
     field :statuses, list_of(:status) do
       arg :input, :filters
       resolve &Statuses.list_statuses/3
+    end
+
+    field :tags, list_of(:tag) do
+      resolve &Tags.list_tags/3
     end
   end
 
