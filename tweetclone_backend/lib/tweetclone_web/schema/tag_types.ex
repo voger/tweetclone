@@ -5,4 +5,10 @@ defmodule TweetCloneWeb.Schema.TagTypes do
     field :id, :integer
     field :name, :string
   end
+
+
+  enum :tags_status do
+    value :latest
+    value :trending
+  end
 end

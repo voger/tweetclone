@@ -49,7 +49,6 @@ defmodule TweetCloneWeb.Schema.StatusTypes do
     field :privacy, :privacy do
       arg(:privacy_val, :string, default_value: :public)
     end
-      field(:tag, :string)
   end
 
   enum :privacy do

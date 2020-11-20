@@ -17,11 +17,25 @@ defmodule TweetClone.Taggable do
       [%Tag{}, ...]
 
   """
-  def list_tags() do
-    Repo.all(Tag)
+  def list_tags(args) do
+    args
+    |> Enum.reduce(Tag, fn
+      {:limit, limit}, query ->
+        query |> limit(^limit)
+
+      {:status, status}, query ->
+        query |> order_by(^order_by_status(status))
+    end)
+    |> Repo.all()
   end
 
+  defp order_by_status(:trending) do
+    [desc: dynamic([p], p.updated_at)]
+  end
 
+  defp order_by_status(:latest) do
+    [desc: dynamic([p], p.inserted_at)]
+  end
 
   @doc """
   Gets a single tag.
@@ -38,7 +52,6 @@ defmodule TweetClone.Taggable do
 
   """
   def get_tag!(id), do: Repo.get!(Tag, id)
-
 
   @doc """
   Deletes a tag.
