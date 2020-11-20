@@ -11,6 +11,7 @@ defmodule TweetClone.Statuses do
   alias TweetClone.Taggable.Tag
 
   require Cl
+
   @doc """
   Gets a single status.
   """
@@ -42,7 +43,7 @@ defmodule TweetClone.Statuses do
       {:ok, %{status: status}} ->
         {:ok, status}
 
-      {:error, status, changeset, _} ->
+      {:error, :status, changeset, _} ->
         {:error, changeset}
     end
   end
@@ -55,12 +56,15 @@ defmodule TweetClone.Statuses do
       tags ->
         now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
-        tag_changesets = Enum.map(tags, &%{name: &1, inserted_at: now, updated_at: now})
+        tag_maps = Enum.map(tags, &%{name: &1, inserted_at: now, updated_at: now})
 
-        Repo.insert_all(Tag, tag_changesets, on_conflict: :nothing)
-
-        query = from t in Tag, where: t.name in ^tags
-        {:ok, Repo.all(query)}
+        {_, tags} =
+          Repo.insert_all(Tag, tag_maps,
+            on_conflict: {:replace, [:updated_at]},
+            returning: true,
+            conflict_target: :name
+          )
+        {:ok, tags}
     end
   end
 
@@ -76,9 +80,9 @@ defmodule TweetClone.Statuses do
         query
 
       {:tag, tag}, query ->
-        from s in query, 
-        join: t in assoc(s, :tags),
-        where: t.name == ^tag
+        from s in query,
+          join: t in assoc(s, :tags),
+          where: t.name == ^tag
 
       {:privacy, :public}, query ->
         from s in query, where: is_nil(s.recipient_id)

@@ -35,6 +35,8 @@ defmodule TweetCloneWeb.Schema do
     end
 
     field :tags, list_of(:tag) do
+    arg :limit, :integer, default_value: 10
+    arg :status, :tags_status, default_value: :latest
       resolve &Tags.list_tags/3
     end
   end
