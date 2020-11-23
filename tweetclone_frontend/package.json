@@ -1,0 +1,15 @@
+{
+  "name": "tweetclone_frontend",
+  "version": "0.0.1",
+  "description": "Frontend app for tweetclone",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@qooxdoo/compiler": "^1.0.0-beta-20201123-0729",
+    "@qooxdoo/framework": "^6.0.0-beta-20201123-0729"
+  }
+}
