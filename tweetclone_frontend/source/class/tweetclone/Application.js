@@ -53,20 +53,11 @@ qx.Class.define("tweetclone.Application",
       -------------------------------------------------------------------------
       */
 
-      // Create a button
-      var button1 = new qx.ui.form.Button("Click me", "tweetclone/test.png");
-
       // Document is the application root
       var doc = this.getRoot();
 
-      // Add button to document at fixed coordinates
-      doc.add(button1, {left: 100, top: 50});
+      doc.add(new tweetclone.widgets.WelcomeLeft(), {edge: 0});
 
-      // Add an event listener
-      button1.addListener("execute", function() {
-        /* eslint no-alert: "off" */
-        alert("Hello World!");
-      });
     }
   }
 });
