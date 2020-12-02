@@ -1,7 +1,7 @@
 /**
  * @asset(tweetclone/backgrounds/parrot.jpg)
  * @asset(qx/icon/${qx.icontheme}/48/*)
- * @asset(tweetclone/icons/tango-icon-theme/32x32/apps/internet-group-chat.png)
+ * @asset(tweetclone/icons/tango-icon-theme/scalable/apps/internet-group-chat.svg)
  *
  */
 qx.Class.define("tweetclone.widgets.WelcomeLeft", {
@@ -45,11 +45,12 @@ qx.Class.define("tweetclone.widgets.WelcomeLeft", {
       const list = [ 
         {icon: `${iconPath}/actions/system-search.png`, label: "Follow your interests."},
         {icon: `${iconPath}/apps/preferences-users.png`, label: "Hear what people are talking about."},
-        {icon: "tweetclone/icons/tango-icon-theme/32x32/apps/internet-group-chat.png", label: "Join the conversation."}
+        {icon: "tweetclone/icons/tango-icon-theme/scalable/apps/internet-group-chat.svg", label: "Join the conversation."}
       ];
 
       list.forEach(({icon, label}) => {
         const atom = this.__createAtom(icon, label);
+        atom.setAppearance("welcome-list-item");
         labelContainer.add(atom);
       });
 
