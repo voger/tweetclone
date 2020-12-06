@@ -16,11 +16,11 @@ qx.Class.define("tweetclone.pages.Welcome", {
 
   members: {
     __createLeftPanel: function () {
-      this.add(new tweetclone.widgets.WelcomeLeft(), { flex: 1 });
+      this.add(new tweetclone.widgets.WelcomeLeft(), {width: "45%"});
     },
 
     __createRightPanel: function () {
-      this.add(new tweetclone.pages.LandingGate(), { flex: 1 });
+      this.add(new tweetclone.pages.LandingGate(), {width: "55%"});
     },
   },
 });
