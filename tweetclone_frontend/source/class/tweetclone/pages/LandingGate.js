@@ -3,7 +3,10 @@ qx.Class.define("tweetclone.pages.LandingGate", {
 
   construct: function () {
     this.base(arguments);
-    this.setLayout(new qx.ui.layout.VBox());
+
+    const layout = new qx.ui.layout.VBox();
+    layout.setAlignX("center");
+    this.setLayout(layout);
 
     this.__addLoginForm();
   },
@@ -22,9 +25,9 @@ qx.Class.define("tweetclone.pages.LandingGate", {
       form.addButton(login);
 
       const groupBox = new qx.ui.groupbox.GroupBox();
-      groupBox.setAllowGrowY(false);
+      groupBox.setAllowGrowX(false);
       groupBox.setLayout(new qx.ui.layout.Canvas());
-      groupBox.add(new qx.ui.form.renderer.Double(form));
+      groupBox.add(new tweetclone.renderer.LoginFormRenderer(form));
 
       this.add(groupBox);
     },

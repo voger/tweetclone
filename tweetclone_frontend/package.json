@@ -9,7 +9,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@qooxdoo/compiler": "^1.0.0-beta-20201130-0808",
+    "@qooxdoo/compiler": "^1.0.0-beta-20201203-1458",
     "@qooxdoo/framework": "^6.0.0-beta-20201123-0729"
   },
   "dependencies": {
