@@ -18,10 +18,18 @@ qx.Theme.define("tweetclone.theme.Appearance", {
     },
 
     "welcome-list-item/label": {
-      style: function() {
+      style: function () {
         return {
           textColor: "white",
           font: "promo",
+        };
+      },
+    },
+
+    "slogan": {
+      style: function () {
+        return {
+          font: "slogan",
         };
       },
     },

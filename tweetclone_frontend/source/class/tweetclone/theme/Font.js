@@ -11,16 +11,20 @@
  * @asset(tweetclone/fonts*)
  *
  */
-qx.Theme.define("tweetclone.theme.Font",
-  {
-    extend : qx.theme.indigo.Font,
+qx.Theme.define("tweetclone.theme.Font", {
+  extend: qx.theme.indigo.Font,
 
-    fonts :
-    {
-      "promo": {
-        size: 19,
-        family: ["Noto"],
-        bold: true
-      }
-    }
-  });
+  fonts: {
+    promo: {
+      size: 19,
+      family: ["NotoSans"],
+      bold: true,
+    },
+
+    slogan: {
+      size: 24,
+      family: ["NotoSans"],
+      bold: true,
+    },
+  },
+});

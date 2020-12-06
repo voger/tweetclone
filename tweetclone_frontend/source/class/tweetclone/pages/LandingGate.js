@@ -9,6 +9,7 @@ qx.Class.define("tweetclone.pages.LandingGate", {
     this.setLayout(layout);
 
     this.__addLoginForm();
+    this.__addRegisterBox();
   },
 
   members: {
@@ -27,9 +28,15 @@ qx.Class.define("tweetclone.pages.LandingGate", {
       const groupBox = new qx.ui.groupbox.GroupBox();
       groupBox.setAllowGrowX(false);
       groupBox.setLayout(new qx.ui.layout.Canvas());
+      groupBox.setMarginBottom(100);
       groupBox.add(new tweetclone.renderer.LoginFormRenderer(form));
 
       this.add(groupBox);
+    },
+
+    __addRegisterBox: function () {
+      const loginBox = new tweetclone.widgets.RegisterBox();
+      this.add(loginBox);
     },
   },
 });
