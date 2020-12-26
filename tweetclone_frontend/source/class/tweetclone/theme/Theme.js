@@ -15,7 +15,7 @@ qx.Theme.define("tweetclone.theme.Theme",
     color : tweetclone.theme.Color,
     decoration : tweetclone.theme.Decoration,
     font : tweetclone.theme.Font,
-    icon : qx.theme.icon.Tango,
+    icon : tweetclone.theme.Icon,
     appearance : tweetclone.theme.Appearance
   }
 });

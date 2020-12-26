@@ -49,6 +49,7 @@ qx.Class.define("tweetclone.widgets.RegisterBox", {
       registerButton.set({
         allowGrowX: true,
       });
+      registerButton.addListener("execute", this.__onRegister, this);
 
       const loginButton = new qx.ui.form.Button(this.tr("Log In"));
       loginButton.set({
@@ -60,6 +61,53 @@ qx.Class.define("tweetclone.widgets.RegisterBox", {
       this.add(jnoinNow);
       this.add(registerButton);
       this.add(loginButton);
+    },
+
+    __onRegister: function () {
+      const self = this;
+      const pageData = [
+        {
+          message: "<p style='font-weight:bold'>Create a new account</p>",
+          formData: {
+            name: {
+              type: "textfield",
+              label: "Your name",
+            },
+            email: {
+              type: "textfield",
+              label: "e-mail",
+            },
+          },
+        },
+        {
+          message: "<p style='font-weight:bold'>Create a new account</p>",
+          formData: {
+            name: {
+              type: "textfield",
+              label: "Your name",
+            },
+            email: {
+              type: "textfield",
+              label: "e-mail",
+            },
+          },
+        },
+      ];
+
+      const wizard = new qxl.dialog.Wizard({
+        width: 500,
+        maxWidth: 500,
+        pageData: pageData,
+        allowCancel: true,
+        callback: (map) => {
+          qxl.dialog.Dialog.alert(
+            "Thank you for your input. See log for result."
+          );
+          this.debug(qx.util.Serializer.toJson(map));
+        },
+      });
+
+      wizard.start();
     },
   },
 });

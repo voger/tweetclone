@@ -1,31 +1,24 @@
 {
- "$schema": "https://qooxdoo.org/schema/Manifest-1-0-0.json",
-  "info" :
-  {
-    "name" : "tweetclone",
-
-    "summary" : "undefined",
-    "description" : "undefined",
-
-    "homepage" : "undefined",
-
-    "license" : "MIT license",
-    "authors" : [],
-
-    "version" : "1.0.0"
+  "$schema": "https://qooxdoo.org/schema/Manifest-1-0-0.json",
+  "info": {
+    "name": "tweetclone",
+    "summary": "undefined",
+    "description": "undefined",
+    "homepage": "undefined",
+    "license": "MIT license",
+    "authors": [],
+    "version": "1.0.0"
   },
-
-  "provides" :
-  {
-    "namespace"   : "tweetclone",
-    "encoding"    : "utf-8",
-    "class"       : "source/class",
-    "resource"    : "source/resource",
-    "translation" : "source/translation"
+  "provides": {
+    "namespace": "tweetclone",
+    "encoding": "utf-8",
+    "class": "source/class",
+    "resource": "source/resource",
+    "translation": "source/translation"
   },
-
   "requires": {
     "@qooxdoo/framework": "^6.0.0-beta-20201123-0729",
-    "@qooxdoo/compiler" : "^1.0.0-beta-20201123-0729"
+    "@qooxdoo/compiler": "^1.0.0-beta-20201123-0729",
+    "qooxdoo/qxl.dialog": "^3.0.4"
   }
 }
