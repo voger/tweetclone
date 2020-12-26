@@ -19,6 +19,7 @@
   "requires": {
     "@qooxdoo/framework": "^6.0.0-beta-20201123-0729",
     "@qooxdoo/compiler": "^1.0.0-beta-20201123-0729",
-    "qooxdoo/qxl.dialog": "^3.0.4"
+    "qooxdoo/qxl.dialog": "^3.0.4",
+    "voger/qxDateSelect": "^1.0.0"
   }
 }

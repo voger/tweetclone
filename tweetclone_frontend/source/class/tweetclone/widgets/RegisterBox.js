@@ -90,6 +90,7 @@ qx.Class.define("tweetclone.widgets.RegisterBox", {
               type: "textfield",
               label: "e-mail",
             },
+            birthday: "dateselect",
           },
         },
       ];
@@ -105,8 +106,15 @@ qx.Class.define("tweetclone.widgets.RegisterBox", {
           );
           this.debug(qx.util.Serializer.toJson(map));
         },
+
       });
 
+      qxl.dialog.MForm.registerFormElementHandlers(
+            "dateselect",
+            tweetclone.formElement.DateSelect
+          );
+
+      debugger;
       wizard.start();
     },
   },
