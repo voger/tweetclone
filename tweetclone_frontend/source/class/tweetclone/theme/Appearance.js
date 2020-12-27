@@ -10,6 +10,9 @@
 
 qx.Theme.define("tweetclone.theme.Appearance", {
   extend: qx.theme.indigo.Appearance,
+  include: [
+    qxDateSelect.theme.Appearance
+  ],
 
   appearances: {
     "welcome-list-item": {

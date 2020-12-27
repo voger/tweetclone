@@ -8,11 +8,11 @@
 
 ************************************************************************ */
 
-qx.Theme.define("tweetclone.theme.Decoration",
-{
-  extend : qx.theme.indigo.Decoration,
+qx.Theme.define("tweetclone.theme.Decoration", {
+  extend: qx.theme.indigo.Decoration,
+  include: [
+  qxDateSelect.theme.Decoration
+  ],
 
-  decorations :
-  {
-  }
+  decorations: {},
 });

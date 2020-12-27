@@ -77,6 +77,11 @@ qx.Class.define("tweetclone.widgets.RegisterBox", {
               type: "textfield",
               label: "e-mail",
             },
+            birthday:
+            {
+              type: "dateselect",
+              label: "Your birthday",
+            }
           },
         },
         {
@@ -90,10 +95,11 @@ qx.Class.define("tweetclone.widgets.RegisterBox", {
               type: "textfield",
               label: "e-mail",
             },
-            birthday: "dateselect",
           },
         },
       ];
+
+      tweetclone.formElement.DateSelect.register();
 
       const wizard = new qxl.dialog.Wizard({
         width: 500,
@@ -106,15 +112,8 @@ qx.Class.define("tweetclone.widgets.RegisterBox", {
           );
           this.debug(qx.util.Serializer.toJson(map));
         },
-
       });
 
-      qxl.dialog.MForm.registerFormElementHandlers(
-            "dateselect",
-            tweetclone.formElement.DateSelect
-          );
-
-      debugger;
       wizard.start();
     },
   },
