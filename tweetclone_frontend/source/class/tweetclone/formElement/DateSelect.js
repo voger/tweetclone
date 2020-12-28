@@ -7,14 +7,13 @@ qx.Class.define("tweetclone.formElement.DateSelect", {
     _registration: {
         initElement: function (fieldType, fieldData, key) {
         let formElement = new qxDateSelect.QxDateSelect();
+          debugger;
 
-        // ["format", "allowNull", "years", "descendingYears"].forEach(function (property) {
-        //   if(fieldData[property] !== undefined) {
-        //     formElement.set({
-        //       property: fieldData["propery"]
-        //     });
-        //   }
-        // });
+        ["format", "allowNull", "years", "descendingYears"].forEach(function (property) {
+          if(fieldData[property] !== undefined) {
+            formElement.set(property, fieldData[property]);
+          }
+        });
 
         return formElement;
       },
