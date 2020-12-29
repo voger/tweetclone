@@ -101,7 +101,6 @@ qx.Class.define("tweetclone.widgets.RegisterBox", {
               type: "infolabel",
               value: this.tr("Get more out of Tweetclone"),
               rich: true,
-              textAlign: "justify",
               font: qx.bom.Font.fromString("16px NotoSans bold"),
             },
             email_subscribe: {
