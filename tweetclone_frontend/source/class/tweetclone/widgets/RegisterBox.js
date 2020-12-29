@@ -64,56 +64,73 @@ qx.Class.define("tweetclone.widgets.RegisterBox", {
     },
 
     __onRegister: function () {
-      const self = this;
+      tweetclone.formElement.DateSelect.register();
+      tweetclone.formElement.Label.register();
       const pageData = [
         {
-          message: "<p style='font-weight:bold'>Create a new account</p>",
+          message:
+            "<p style='font-weight:bold'>" +
+            this.tr("Create new account") +
+            "</p>",
           formData: {
             name: {
               type: "textfield",
-              label: "Your name",
+              label: this.tr("Your name"),
             },
             email: {
               type: "textfield",
-              label: "e-mail",
+              label: this.tr("e-mail"),
             },
-            birthday:
-            {
+            birthday: {
               type: "dateselect",
-              label: "Your birthday",
-            }
+              label: this.tr("Birthday"),
+              // allowNull: true,
+            },
           },
         },
         {
-          message: "<p style='font-weight:bold'>Create a new account</p>",
+          message:
+            "<p style='font-weight:bold'>" +
+            this.tr("Customize your experience") +
+            "</p>" +
+            "<p>" +
+            this.tr("These options don't really do anything") +
+            "</p>",
           formData: {
-            name: {
-              type: "textfield",
-              label: "Your name",
+            label: {
+              type: "infolabel",
+              value: this.tr("Get more out of Tweetclone"),
+              rich: true,
+              textAlign: "justify",
+              font: qx.bom.Font.fromString("16px NotoSans bold"),
             },
-            email: {
-              type: "textfield",
-              label: "e-mail",
+            email_subscribe: {
+              type: "checkbox",
+              label: this.tr(
+                "Receive email about your Tweetclone activity and recommendations."
+              ),
+              value: false,
             },
           },
         },
       ];
 
-      tweetclone.formElement.DateSelect.register();
-
-      const wizard = new qxl.dialog.Wizard({
+      let wizard = new qxl.dialog.Wizard({
         width: 500,
         maxWidth: 500,
         pageData: pageData,
         allowCancel: true,
+        setupFormRendererFunction: function (form) {
+          return new tweetclone.renderer.DialogRenderer(form);
+        },
         callback: (map) => {
           qxl.dialog.Dialog.alert(
             "Thank you for your input. See log for result."
           );
           this.debug(qx.util.Serializer.toJson(map));
         },
+        caption: "Test",
       });
-
       wizard.start();
     },
   },
